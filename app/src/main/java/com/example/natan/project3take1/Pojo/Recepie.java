@@ -3,6 +3,8 @@ package com.example.natan.project3take1.Pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.example.natan.project3take1.MainActivity;
+
 import java.util.ArrayList;
 
 /**
@@ -15,15 +17,17 @@ private String id;
 private String name;
 //private ArrayList<Ingredients> mIngredients;
 //private ArrayList<Steps> mSteps;
-private int servings;
+private String servings;
 private String image;
 
-    public Recepie(String id, String name, int servings, String image) {
+    public Recepie(String id, String name, String servings, String image) {
         this.id = id;
         this.name = name;
         this.servings = servings;
         this.image = image;
     }
+
+
 
     public String getId() {
         return id;
@@ -41,11 +45,11 @@ private String image;
         this.name = name;
     }
 
-    public int getServings() {
+    public String getServings() {
         return servings;
     }
 
-    public void setServings(int servings) {
+    public void setServings(String servings) {
         this.servings = servings;
     }
 
@@ -66,14 +70,14 @@ private String image;
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.name);
-        dest.writeInt(this.servings);
+        dest.writeString(this.servings);
         dest.writeString(this.image);
     }
 
     protected Recepie(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
-        this.servings = in.readInt();
+        this.servings = in.readString();
         this.image = in.readString();
     }
 
