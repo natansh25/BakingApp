@@ -35,7 +35,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_custom, parent, false);
+                .inflate(R.layout.item_custom2, parent, false);
 
         return new MyViewHolder(itemView);
 
@@ -68,7 +68,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.img.setImageResource(R.drawable.ic_launcher_background);
 
         holder.txt_name.setText(recepie.getName());
-        holder.txt_id.setText(recepie.getId());
+       // holder.txt_id.setText(recepie.getId());
         holder.txt_serving.setText(recepie.getServings());
         Log.i("serving21", String.valueOf(recepie.getServings()));
 

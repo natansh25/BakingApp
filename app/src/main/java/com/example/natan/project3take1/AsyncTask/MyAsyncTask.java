@@ -1,5 +1,8 @@
 package com.example.natan.project3take1.AsyncTask;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.AsyncTask;
 
 import com.example.natan.project3take1.Pojo.Recepie;
@@ -40,4 +43,6 @@ public class MyAsyncTask extends AsyncTask<URL, Void, ArrayList<Recepie>> {
         mListner.returnRecipe(recepies);
 
     }
+
+
 }
