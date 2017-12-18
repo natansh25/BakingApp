@@ -9,6 +9,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.natan.project3take1.Adapters.IngredientsAdapter;
+import com.example.natan.project3take1.Adapters.StepsAdapter;
 import com.example.natan.project3take1.Pojo.Ingredients;
 import com.example.natan.project3take1.Pojo.Recepie;
 import com.example.natan.project3take1.Pojo.Steps;
@@ -20,55 +21,62 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-
 public class StepsDetailActivity extends AppCompatActivity {
 
-        //BindingViewsWithButterKnif
+    //BindingViewsWithButterKnif
 
-        @BindView(R.id.ingredient_list)
+    @BindView(R.id.ingredient_list)
     RecyclerView mRecyclerViewIngredient;
+
+    @BindView(R.id.recipe_details_steps)
+    RecyclerView mRecyclerViewSteps;
 
     //
     private IngredientsAdapter mIngredientsAdapter;
+    private StepsAdapter mStepsAdapter;
 
     //List Creation
     private ArrayList<Steps> stepslist;
     private ArrayList<Ingredients> ingredientsList;
-    private int index=0;
+    private int index = 0;
     private RecyclerView mRecyclerView;
-
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_steps_detail);
-        mRecyclerView=findViewById(R.id.ingredient_list);
+        mRecyclerView = findViewById(R.id.ingredient_list);
         ButterKnife.bind(this);
         //index =getIntent().getExtras().getInt("items");
         //ingredientsList=recipeList.get(index).getIngredients();
-        Recepie recipeList=getIntent().getParcelableExtra("items");
-        ingredientsList=recipeList.getIngredients();
+        Recepie recipeList = getIntent().getParcelableExtra("items");
+        ingredientsList = recipeList.getIngredients();
         Log.i("tagu21", String.valueOf(recipeList.getIngredients()));
+        stepslist = recipeList.getSteps();
+
+        // Ingredients steps------------------------------------------------------
+        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
+        mRecyclerViewIngredient.setLayoutManager(manager);
+        mRecyclerViewIngredient.setItemAnimator(new DefaultItemAnimator());
+        mIngredientsAdapter = new IngredientsAdapter(ingredientsList);
+        mRecyclerViewIngredient.setAdapter(mIngredientsAdapter);
+        mIngredientsAdapter.notifyDataSetChanged();
+
+        // Steps steps-------------------------------------------------------------
+        RecyclerView.LayoutManager manager2 = new LinearLayoutManager(this);
+        mRecyclerViewSteps.setLayoutManager(manager2);
+        mRecyclerViewSteps.setItemAnimator(new DefaultItemAnimator());
+        mStepsAdapter=new StepsAdapter(stepslist, new StepsAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(Steps steps) {
+                Toast.makeText(StepsDetailActivity.this, steps.getShortDescription(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        mRecyclerViewSteps.setAdapter(mStepsAdapter);
+        mStepsAdapter.notifyDataSetChanged();
 
 
-
-
-
-
-
-        if(ingredientsList!=null) {
-            RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-            mRecyclerViewIngredient.setLayoutManager(manager);
-            mRecyclerViewIngredient.setItemAnimator(new DefaultItemAnimator());
-            mIngredientsAdapter = new IngredientsAdapter(ingredientsList);
-            mRecyclerViewIngredient.setAdapter(mIngredientsAdapter);
-            mIngredientsAdapter.notifyDataSetChanged();
-        }
-        else
-        {
-            Toast.makeText(this, "Null list", Toast.LENGTH_SHORT).show();
-        }
 
     }
 }
