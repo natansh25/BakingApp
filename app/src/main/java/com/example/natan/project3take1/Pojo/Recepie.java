@@ -3,8 +3,6 @@ package com.example.natan.project3take1.Pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.example.natan.project3take1.MainActivity;
-
 import java.util.ArrayList;
 
 /**
@@ -13,20 +11,40 @@ import java.util.ArrayList;
 
 public class Recepie implements Parcelable {
 
-private String id;
-private String name;
-//private ArrayList<Ingredients> mIngredients;
-//private ArrayList<Steps> mSteps;
-private String servings;
-private String image;
+    private String id;
+    private String name;
 
-    public Recepie(String id, String name, String servings, String image) {
+    private String servings;
+    private String image;
+    private ArrayList<Ingredients> ingredients;
+    private ArrayList<Steps> steps;
+
+
+    public ArrayList<Ingredients> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(ArrayList<Ingredients> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public ArrayList<Steps> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(ArrayList<Steps> steps) {
+        this.steps = steps;
+    }
+
+    public Recepie(String id, String name, ArrayList<Ingredients> ingredients, ArrayList<Steps> steps, String servings, String image) {
         this.id = id;
         this.name = name;
         this.servings = servings;
-        this.image = image;
-    }
 
+        this.image = image;
+        this.ingredients = ingredients;
+        this.steps = steps;
+    }
 
 
     public String getId() {
@@ -72,6 +90,8 @@ private String image;
         dest.writeString(this.name);
         dest.writeString(this.servings);
         dest.writeString(this.image);
+        dest.writeTypedList(this.ingredients);
+        dest.writeTypedList(this.steps);
     }
 
     protected Recepie(Parcel in) {
@@ -79,9 +99,11 @@ private String image;
         this.name = in.readString();
         this.servings = in.readString();
         this.image = in.readString();
+        this.ingredients = in.createTypedArrayList(Ingredients.CREATOR);
+        this.steps = in.createTypedArrayList(Steps.CREATOR);
     }
 
-    public static final Parcelable.Creator<Recepie> CREATOR = new Parcelable.Creator<Recepie>() {
+    public static final Creator<Recepie> CREATOR = new Creator<Recepie>() {
         @Override
         public Recepie createFromParcel(Parcel source) {
             return new Recepie(source);

@@ -1,6 +1,7 @@
-package com.example.natan.project3take1;
+package com.example.natan.project3take1.Activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -18,6 +19,7 @@ import com.example.natan.project3take1.Adapters.RecipeAdapter;
 import com.example.natan.project3take1.AsyncTask.AsyncListner;
 import com.example.natan.project3take1.AsyncTask.MyAsyncTask;
 import com.example.natan.project3take1.Pojo.Recepie;
+import com.example.natan.project3take1.R;
 import com.example.natan.project3take1.Utils.NetworkUtils;
 
 import org.json.JSONException;
@@ -33,6 +35,9 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
     private URL url;
     SwipeRefreshLayout mSwipeRefreshLayout;
 
+    public static ArrayList<Recepie> recipeList;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,7 +45,7 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
         // swiping to refresh-------------------------
 
         mRecyclerView = findViewById(R.id.recyclerView);
-        mSwipeRefreshLayout=findViewById(R.id.swip_to_refresh);
+        mSwipeRefreshLayout = findViewById(R.id.swip_to_refresh);
         mSwipeRefreshLayout.setOnRefreshListener(this);
         RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
         mRecyclerView.setLayoutManager(manager);
@@ -59,10 +64,21 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
     @Override
     public void returnRecipe(ArrayList<Recepie> recepies) {
 
-        mRecipeAdapter = new RecipeAdapter(recepies);
+        mRecipeAdapter = new RecipeAdapter(recepies, new RecipeAdapter.ListItemClickListener() {
+            @Override
+            public void onListItemClick(Recepie recepie) {
+                Intent intent = new Intent(MainActivity.this, StepsDetailActivity.class);
+                intent.putExtra("items", recepie);
+                startActivity(intent);
+
+
+            }
+        });
+
         mSwipeRefreshLayout.setRefreshing(false);
         mRecyclerView.setAdapter(mRecipeAdapter);
         mRecipeAdapter.notifyDataSetChanged();
+        recipeList = recepies;
 
     }
 
@@ -93,4 +109,6 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
 
 
     }
+
+
 }

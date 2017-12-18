@@ -10,13 +10,12 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.natan.project3take1.MainActivity;
+import com.example.natan.project3take1.Pojo.Ingredients;
 import com.example.natan.project3take1.Pojo.Recepie;
 import com.example.natan.project3take1.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by natan on 12/16/2017.
@@ -25,8 +24,19 @@ import java.util.List;
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHolder> {
 
     ArrayList<Recepie> mRecepies;
+    final private ListItemClickListener mListItemClickListener;
 
-    public RecipeAdapter(ArrayList<Recepie> recepies) {
+
+    //Interface
+
+    public interface ListItemClickListener {
+
+        void onListItemClick(Recepie recepie);
+
+    }
+
+    public RecipeAdapter(ArrayList<Recepie> recepies, ListItemClickListener listItemClickListener) {
+        mListItemClickListener = listItemClickListener;
         mRecepies = recepies;
     }
 
@@ -47,16 +57,15 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         Recepie recepie = mRecepies.get(position);
         Context context = holder.img.getContext();
 
-        if(recepie.getImage()==null)
+        if (recepie.getImage() == null)
 
-            {  Picasso.with(context)
-                .load(recepie.getImage())
-                .placeholder(R.drawable.ic_launcher_background)
-                .error(R.drawable.ic_launcher_foreground)
-                .into(holder.img);
-            }
-        else
         {
+            Picasso.with(context)
+                    .load(recepie.getImage())
+                    .placeholder(R.drawable.ic_launcher_background)
+                    .error(R.drawable.ic_launcher_foreground)
+                    .into(holder.img);
+        } else {
             Picasso.with(context)
                     .load(R.drawable.ic_launcher_background)
                     .placeholder(R.drawable.ic_launcher_background)
@@ -68,13 +77,9 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         holder.img.setImageResource(R.drawable.ic_launcher_background);
 
         holder.txt_name.setText(recepie.getName());
-       // holder.txt_id.setText(recepie.getId());
         holder.txt_serving.setText(recepie.getServings());
         Log.i("serving21", String.valueOf(recepie.getServings()));
-
-
-        //Movies movie = mMovieList.get(position);
-        //holder.enterName.setText(movie.getMovieName());
+        holder.bind(mRecepies.get(position), mListItemClickListener);
 
 
     }
@@ -98,7 +103,21 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             txt_serving = itemView.findViewById(R.id.txt_serving);
 
 
+
+
         }
+
+
+        public void bind(final Recepie recepie, final ListItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.onListItemClick(recepie);
+                }
+            });
+        }
+
+
     }
 
 

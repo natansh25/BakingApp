@@ -5,7 +5,9 @@ import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.example.natan.project3take1.Pojo.Ingredients;
 import com.example.natan.project3take1.Pojo.Recepie;
+import com.example.natan.project3take1.Pojo.Steps;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -109,14 +111,55 @@ public class NetworkUtils {
             String recipeServings = recipeJsonObject.getString((RECIPE_SERVINGS));
             String recipeImage = recipeJsonObject.getString(RECIPE_IMAGE);
             Log.i("tagu21", recipeId + recipeName);
-            Recepie recepie = new Recepie(recipeId, recipeName, recipeServings, recipeImage);
-            recepies.add(recepie);
 
+
+            ArrayList<Ingredients> ingredientList = new ArrayList<>();
+            ArrayList<Steps> stepsList = new ArrayList<>();
+
+
+            //Ingredients Json Array
+            JSONArray ingredientJsonArray = recipeJsonObject.optJSONArray(RECIPE_INGREDIENTS);
+
+            //Iterate through the Ingredient Array
+            for (int j = 0; j < ingredientJsonArray.length(); j++) {
+                JSONObject ingredientsObjects = ingredientJsonArray.getJSONObject(j);
+
+                String ingredientQuantity = ingredientsObjects.getString(INGREDIENTS_QUANTIFY);
+                String ingredientMeasure = ingredientsObjects.getString(INGREDIENTS_MEASURE);
+                String ingredientIngredients = ingredientsObjects.getString(INGREDIENTS_INGREDIENT);
+
+                //Creating Ingredients Object
+                Ingredients ingredients = new Ingredients(ingredientQuantity, ingredientMeasure, ingredientIngredients);
+
+                ingredientList.add(ingredients);
+            }
+
+            //Steps Json Array
+            JSONArray stepsJsonArray = recipeJsonObject.optJSONArray(RECIPE_STEPS);
+
+            //Iterate through the Step Array
+            for (int k = 0; k < stepsJsonArray.length(); k++) {
+                JSONObject stepObject = stepsJsonArray.getJSONObject(k);
+
+                String stepsId = stepObject.getString(STEPS_ID);
+                String stepsSdescrp = stepObject.getString(STEPS_SHORT_DESCRP);
+                String stepsDescrp = stepObject.getString(STEPS_DESCRP);
+                String stepsVpath = stepObject.getString(STEPS_VIDEO_PATH);
+                String stepsThumnail = stepObject.getString(STEPS_THUMBNAIL);
+
+                //Creating Step Object
+                Steps stepsObj = new Steps(stepsId, stepsSdescrp, stepsDescrp, stepsVpath, stepsThumnail);
+
+                stepsList.add(stepsObj);
+            }
+
+            Recepie recipeObj = new Recepie(recipeId, recipeName, ingredientList, stepsList, recipeServings, recipeImage);
+            recepies.add(recipeObj);
 
         }
 
-        return recepies;
 
+        return recepies;
 
     }
 
