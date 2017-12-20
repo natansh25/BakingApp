@@ -33,7 +33,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
 
     public interface ListItemClickListener {
 
-        void onListItemClick(Steps steps);
+        void onListItemClick(int clickedItemIndex);
 
     }
 
@@ -51,21 +51,16 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         return new StepsAdapter.MyViewHolder(itemView);
 
 
-
-
-
-
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
 
-        Steps steps= mSteps.get(position);
+        Steps steps = mSteps.get(position);
         holder.txt_stepId.setText(steps.getId());
-        Log.i("xxx",steps.getId());
+        Log.i("xxx", steps.getId());
         holder.txt_stepDescription.setText(steps.getShortDescription());
-        Log.i("xxx",steps.getShortDescription());
-        holder.bind(mSteps.get(position), mListItemClickListener);
+        Log.i("xxx", steps.getShortDescription());
 
     }
 
@@ -74,7 +69,7 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         return mSteps.size();
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.txt_step_id)
         TextView txt_stepId;
@@ -85,16 +80,15 @@ public class StepsAdapter extends RecyclerView.Adapter<StepsAdapter.MyViewHolder
         public MyViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
+            itemView.setOnClickListener(this);
         }
 
 
-        public void bind(final Steps steps, final StepsAdapter.ListItemClickListener listener) {
-            itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    listener.onListItemClick(steps);
-                }
-            });
+        @Override
+        public void onClick(View v) {
+            int clickedPosition = getAdapterPosition();
+            mListItemClickListener.onListItemClick(clickedPosition);
+
         }
     }
 
