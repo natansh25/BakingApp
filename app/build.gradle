@@ -26,6 +26,8 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     //Exoplayer
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
+    //Picasso
+    compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
