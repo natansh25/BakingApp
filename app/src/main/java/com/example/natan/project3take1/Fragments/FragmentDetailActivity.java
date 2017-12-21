@@ -1,22 +1,22 @@
-package com.example.natan.project3take1.Activity;
+package com.example.natan.project3take1.Fragments;
 
 import android.graphics.Paint;
 import android.net.Uri;
-import android.support.v4.app.FragmentManager;
+import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.natan.project3take1.Adapters.StepsAdapter;
-import com.example.natan.project3take1.Fragments.FragmentDetailActivity;
-import com.example.natan.project3take1.Pojo.Recepie;
+import com.example.natan.project3take1.Activity.DetailActivity;
 import com.example.natan.project3take1.Pojo.Steps;
 import com.example.natan.project3take1.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -41,15 +41,16 @@ import com.squareup.picasso.Picasso;
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-import butterknife.ButterKnife;
+/**
+ * Created by natan on 12/20/2017.
+ */
 
+public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventListener  {
 
-
-public class DetailActivity extends AppCompatActivity {
-
-    /*int index;
+    int index;
     protected Steps steps;
     private ArrayList<Steps> stepList;
     @BindView(R.id.next)
@@ -66,42 +67,39 @@ public class DetailActivity extends AppCompatActivity {
     SimpleExoPlayerView playerView;
     private static MediaSessionCompat mediaSession;
     private SimpleExoPlayer exoPlayer;
-    private PlaybackStateCompat.Builder stateBuilder;*/
+    private PlaybackStateCompat.Builder stateBuilder;
 
+    public FragmentDetailActivity() {
+    }
 
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_detail);
-        //ButterKnife.bind(this);
-       /* getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        stepList = getIntent().getParcelableArrayListExtra("stepsi");
-        index = getIntent().getExtras().getInt("position");
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+
+        View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
+
+
+
+
+        ButterKnife.bind(this,rootView);
+
+        stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
+        index = getActivity().getIntent().getExtras().getInt("position");
         Steps steps = stepList.get(index);
         txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
-        setUpView(steps);*/
+        setUpView(steps);
 
-        if (MainActivity.isTablet && (getSupportActionBar() != null)) {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(false);
-        } else {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        }
-
-        if (savedInstanceState == null) {
-            FragmentManager fragmentManager = getSupportFragmentManager();
-            FragmentDetailActivity fragmentDetailActivity = new FragmentDetailActivity();
-            fragmentManager.beginTransaction()
-                    .add(R.id.detail, fragmentDetailActivity)
-                    .commit();
-
+        return rootView;
 
     }
 
-   /* private void setUpView(Steps step) {
 
-        Toast.makeText(this, step.getShortDescription(), Toast.LENGTH_SHORT).show();
+    private void setUpView(Steps step) {
+
+
         txt_recipe_short.setText(step.getShortDescription());
         txt_recipe_desc.setText(step.getDescription());
         //Getting image url
@@ -137,13 +135,13 @@ public class DetailActivity extends AppCompatActivity {
 
             TrackSelector trackSelector = new DefaultTrackSelector();
             LoadControl loadControl = new DefaultLoadControl();
-            exoPlayer = ExoPlayerFactory.newSimpleInstance(this, trackSelector, loadControl);
+            exoPlayer = ExoPlayerFactory.newSimpleInstance(getActivity(), trackSelector, loadControl);
             playerView.setPlayer(exoPlayer);
             exoPlayer.addListener((ExoPlayer.EventListener) this);
 
-            String userAgent = Util.getUserAgent(this, "StepVideo");
+            String userAgent = Util.getUserAgent(getActivity(), "StepVideo");
             MediaSource mediaSource = new ExtractorMediaSource(mediaUri, new DefaultDataSourceFactory(
-                    this, userAgent), new DefaultExtractorsFactory(), null, null);
+                    getActivity(), userAgent), new DefaultExtractorsFactory(), null, null);
             exoPlayer.prepare(mediaSource);
             exoPlayer.setPlayWhenReady(true);
         }
@@ -152,11 +150,11 @@ public class DetailActivity extends AppCompatActivity {
     }
 
 
-    *//**
+    /**
      * Media session initialization
-     *//*
+     */
     private void initializeMediaSession() {
-        mediaSession = new MediaSessionCompat(this, "RecipePageFragment");
+        mediaSession = new MediaSessionCompat(getActivity(), "RecipePageFragment");
 
         mediaSession.setFlags(
                 MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
@@ -206,11 +204,11 @@ public class DetailActivity extends AppCompatActivity {
 
     private void setupImageView(String imageUrl) {
         if (imageUrl.isEmpty()) {
-            Picasso.with(this)
+            Picasso.with(getActivity())
                     .load(R.drawable.thumb)
                     .into(img_recipe);
         } else {
-            Picasso.with(this)
+            Picasso.with(getActivity())
                     .load(imageUrl)
                     .error(R.drawable.thumb)
                     .into(img_recipe);
@@ -226,9 +224,9 @@ public class DetailActivity extends AppCompatActivity {
         releasePlayer();
     }
 
-    *//**
+    /**
      * Exoplayer release method
-     *//*
+     */
     private void releasePlayer() {
         if (exoPlayer != null) {
             exoPlayer.stop();
@@ -245,7 +243,7 @@ public class DetailActivity extends AppCompatActivity {
     @OnClick(R.id.next)
     void doNextStep() {
         if (index == stepList.size() - 1) {
-            Toast.makeText(DetailActivity.this, String.valueOf(index), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
             if (btn_next.isEnabled()) {
                 btn_next.setEnabled(false);
             }
@@ -265,7 +263,7 @@ public class DetailActivity extends AppCompatActivity {
     @OnClick(R.id.prev)
     void doPreviousStep() {
         if (index == 0) {
-            Toast.makeText(DetailActivity.this, String.valueOf(index), Toast.LENGTH_SHORT).show();
+            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
             if (btn_prev.isEnabled()) btn_prev.setEnabled(false);
         } else {
             index--;
@@ -316,8 +314,7 @@ public class DetailActivity extends AppCompatActivity {
     @Override
     public void onPositionDiscontinuity() {
 
-    }*/
-}}
+    }
 
 
 
@@ -326,3 +323,13 @@ public class DetailActivity extends AppCompatActivity {
 
 
 
+
+
+
+
+
+
+
+
+
+}

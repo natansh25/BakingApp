@@ -33,12 +33,12 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static boolean isTablet = false;
-    private RecyclerView mRecyclerView;
+    /*private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
     private URL url;
     SwipeRefreshLayout mSwipeRefreshLayout;
 
-    public static ArrayList<Recepie> recipeList;
+    public static ArrayList<Recepie> recipeList;*/
 
 
     @Override
@@ -64,15 +64,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
     }
-
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
 
 
 }
