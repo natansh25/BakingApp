@@ -1,5 +1,6 @@
 package com.example.natan.project3take1.Activity;
 
+import android.graphics.Paint;
 import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -75,6 +76,7 @@ public class DetailActivity extends AppCompatActivity implements ExoPlayer.Event
         stepList = getIntent().getParcelableArrayListExtra("stepsi");
         index = getIntent().getExtras().getInt("position");
         Steps steps = stepList.get(index);
+        txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
         setUpView(steps);

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 import com.example.natan.project3take1.Adapters.RecipeAdapter;
 import com.example.natan.project3take1.AsyncTask.AsyncListner;
 import com.example.natan.project3take1.AsyncTask.MyAsyncTask;
+import com.example.natan.project3take1.Fragments.FragmentMain;
 import com.example.natan.project3take1.Pojo.Recepie;
 import com.example.natan.project3take1.R;
 import com.example.natan.project3take1.Utils.NetworkUtils;
@@ -28,8 +30,9 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity implements AsyncListner, SwipeRefreshLayout.OnRefreshListener {
+public class MainActivity extends AppCompatActivity {
 
+    public static boolean isTablet = false;
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
     private URL url;
@@ -42,45 +45,26 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        // swiping to refresh-------------------------
 
-        mRecyclerView = findViewById(R.id.recyclerView);
-        mSwipeRefreshLayout = findViewById(R.id.swip_to_refresh);
-        mSwipeRefreshLayout.setOnRefreshListener(this);
-        RecyclerView.LayoutManager manager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(manager);
-        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        url = NetworkUtils.buildURl();
-        //checking Internet connection-----------------------------------------------------
-        if (isOnline()) {
-
-            new MyAsyncTask(this).execute(url);
-        } else {
-            Toast.makeText(this, "Check your Internet Connection !!", Toast.LENGTH_SHORT).show();
+        if (savedInstanceState == null) {
+            if (findViewById(R.id.tablet_view) != null) {
+                isTablet = true;
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentMain recipeFragment = new FragmentMain();
+                fragmentManager.beginTransaction()
+                        .add(R.id.tablet_view, recipeFragment)
+                        .commit();
+            } else {
+                FragmentManager fragmentManager = getSupportFragmentManager();
+                FragmentMain recipeFragment = new FragmentMain();
+                fragmentManager.beginTransaction()
+                        .add(R.id.phone_view, recipeFragment)
+                        .commit();
+            }
         }
 
     }
 
-    @Override
-    public void returnRecipe(ArrayList<Recepie> recepies) {
-
-        mRecipeAdapter = new RecipeAdapter(recepies, new RecipeAdapter.ListItemClickListener() {
-            @Override
-            public void onListItemClick(Recepie recepie) {
-                Intent intent = new Intent(MainActivity.this, StepsDetailActivity.class);
-                intent.putExtra("items", recepie);
-                startActivity(intent);
-
-
-            }
-        });
-
-        mSwipeRefreshLayout.setRefreshing(false);
-        mRecyclerView.setAdapter(mRecipeAdapter);
-        mRecipeAdapter.notifyDataSetChanged();
-        recipeList = recepies;
-
-    }
 
     public boolean isOnline() {
         ConnectivityManager cm =
@@ -88,27 +72,7 @@ public class MainActivity extends AppCompatActivity implements AsyncListner, Swi
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
-    //Refreshing
 
-
-    @Override
-    public void onRefresh() {
-        downloadRecipe();
-    }
-
-    private void downloadRecipe() {
-        if (isOnline()) {
-            mSwipeRefreshLayout.setRefreshing(true);
-            new MyAsyncTask(this).execute(url);
-            mRecipeAdapter.notifyDataSetChanged();
-
-        } else {
-            mSwipeRefreshLayout.setRefreshing(false);
-
-        }
-
-
-    }
 
 
 }

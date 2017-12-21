@@ -103,8 +103,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
             txt_serving = itemView.findViewById(R.id.txt_serving);
 
 
-
-
         }
 
 
