@@ -8,7 +8,7 @@
 
 
     <FrameLayout
-        android:id="@+id/detail"
+        android:id="@+id/detail_activity_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 

@@ -52,8 +52,6 @@ public class FragmentStepsDetailActivity extends Fragment implements StepsAdapte
     private ArrayList<Ingredients> ingredientsList;
 
 
-
-
     public FragmentStepsDetailActivity() {
     }
 
@@ -64,11 +62,7 @@ public class FragmentStepsDetailActivity extends Fragment implements StepsAdapte
         View rootView = inflater.inflate(R.layout.fragment_step_detail, container, false);
 
 
-
-
-        ButterKnife.bind(this,rootView);
-        //index =getIntent().getExtras().getInt("items");
-        //ingredientsList=recipeList.get(index).getIngredients();
+        ButterKnife.bind(this, rootView);
         Recepie recipeList = getActivity().getIntent().getParcelableExtra("items");
 
         ingredientsList = recipeList.getIngredients();
@@ -107,12 +101,12 @@ public class FragmentStepsDetailActivity extends Fragment implements StepsAdapte
             startActivity(intent);
         } else {
 
-           /* FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-            StepsDetailActivityFragment stepsDetailActivityFragment = new StepsDetailActivityFragment();
-            stepsDetailActivityFragment.index = clickedItemIndex;
+            FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+            FragmentDetailActivity fragmentDetailActivity = new FragmentDetailActivity();
+            fragmentDetailActivity.index = clickedItemIndex;
             fragmentManager.beginTransaction()
-                    .add(R.id.steps_details_frame, stepsDetailActivityFragment)
-                    .commit();*/
+                    .replace(R.id.steps_details_frame, fragmentDetailActivity)
+                    .commit();
 
 
         }

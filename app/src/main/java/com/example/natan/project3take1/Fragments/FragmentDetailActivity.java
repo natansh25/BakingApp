@@ -17,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.natan.project3take1.Activity.DetailActivity;
+import com.example.natan.project3take1.Activity.MainActivity;
+import com.example.natan.project3take1.Pojo.Recepie;
 import com.example.natan.project3take1.Pojo.Steps;
 import com.example.natan.project3take1.R;
 import com.google.android.exoplayer2.DefaultLoadControl;
@@ -48,11 +50,12 @@ import butterknife.OnClick;
  * Created by natan on 12/20/2017.
  */
 
-public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventListener  {
+public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventListener {
 
-    int index;
+    protected static int index = 0;
     protected Steps steps;
     private ArrayList<Steps> stepList;
+    private ArrayList<Recepie> recipeList;
     @BindView(R.id.next)
     Button btn_next;
     @BindView(R.id.prev)
@@ -80,17 +83,24 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
         View rootView = inflater.inflate(R.layout.fragment_detail, container, false);
 
 
+        ButterKnife.bind(this, rootView);
 
-
-        ButterKnife.bind(this,rootView);
 
         stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
         index = getActivity().getIntent().getExtras().getInt("position");
-        Steps steps = stepList.get(index);
-        txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+        Log.i("fragu21", String.valueOf(index));
+        if (index == 0) {
+            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
+            Log.i("fragu21", String.valueOf(index));
+            Steps steps = stepList.get(index);
+            txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
 
-        setUpView(steps);
+            setUpView(steps);
+        }
 
         return rootView;
 
@@ -315,21 +325,6 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
     public void onPositionDiscontinuity() {
 
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
