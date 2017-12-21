@@ -33,12 +33,6 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
 
     public static boolean isTablet = false;
-    /*private RecyclerView mRecyclerView;
-    private RecipeAdapter mRecipeAdapter;
-    private URL url;
-    SwipeRefreshLayout mSwipeRefreshLayout;
-
-    public static ArrayList<Recepie> recipeList;*/
 
 
     @Override

@@ -94,7 +94,7 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
 
         } else {
             Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
-            Log.i("fragu21", String.valueOf(index));
+
             Steps steps = stepList.get(index);
             txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 
