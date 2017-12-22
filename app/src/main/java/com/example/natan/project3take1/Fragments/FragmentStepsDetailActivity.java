@@ -101,6 +101,12 @@ public class FragmentStepsDetailActivity extends Fragment implements StepsAdapte
             startActivity(intent);
         } else {
 
+            Bundle bundle=new Bundle();
+            bundle.putInt("index",clickedItemIndex);
+            bundle.putParcelableArrayList("bundle",stepslist);
+            FragmentDetailActivity fragmentDetailActivityb=new FragmentDetailActivity();
+            fragmentDetailActivityb.setArguments(bundle);
+
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentDetailActivity fragmentDetailActivity = new FragmentDetailActivity();
             fragmentDetailActivity.index = clickedItemIndex;

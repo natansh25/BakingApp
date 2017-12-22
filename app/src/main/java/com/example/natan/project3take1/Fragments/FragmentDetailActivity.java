@@ -52,7 +52,7 @@ import butterknife.OnClick;
 
 public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventListener {
 
-    protected static int index = 0;
+    int index;
     protected Steps steps;
     private ArrayList<Steps> stepList;
     private ArrayList<Recepie> recipeList;
@@ -86,20 +86,35 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
         ButterKnife.bind(this, rootView);
 
 
-        stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
-        index = getActivity().getIntent().getExtras().getInt("position");
-        Log.i("fragu21", String.valueOf(index));
-        if (index == 0) {
-            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
+        if (!MainActivity.isTablet) {
+            //getting extra data into StepList list with the position
+            stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
 
-        } else {
-            Toast.makeText(getActivity(), String.valueOf(index), Toast.LENGTH_SHORT).show();
+            index = getActivity().getIntent().getExtras().getInt("position");
+            Log.i("tagu", String.valueOf(index));
 
-            Steps steps = stepList.get(index);
-            txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
-
-
+            steps = stepList.get(index);
             setUpView(steps);
+        }
+        else {
+
+
+            Bundle bundle=this.getArguments();
+            if(bundle!=null) {
+
+                stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
+                index = getArguments().getInt("index");
+                Log.i("fragu21", String.valueOf(index));
+                Steps steps = stepList.get(index);
+                txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
+
+
+                setUpView(steps);
+            } else {
+                Toast.makeText(getActivity(), "null !!", Toast.LENGTH_SHORT).show();
+
+
+            }
         }
 
         return rootView;
