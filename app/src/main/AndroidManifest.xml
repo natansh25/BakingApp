@@ -21,8 +21,21 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activity.StepsDetailActivity" />
-        <activity android:name=".Activity.DetailActivity" />
+        <activity
+            android:name=".Activity.StepsDetailActivity"
+            android:parentActivityName="com.example.natan.project3take1.Activity.MainActivity">
+
+        <meta-data
+            android:name="android.support.PARENT_ACTIVITY"
+            android:value=".Activity.MainActivity" />
+        </activity>
+
+
+        <activity android:name=".Activity.DetailActivity"/>
+
+
+
+
 
         <receiver android:name=".Widget.RecipeWidgetProvider">
             <intent-filter>
@@ -33,7 +46,8 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/recipe_widget_provider_info" />
         </receiver>
-        <service android:name=".WidgetStackViewService"
+        <service
+            android:name=".WidgetStackViewService"
             android:permission="android.permission.BIND_REMOTEVIEWS"></service>
     </application>
 

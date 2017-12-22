@@ -30,16 +30,25 @@ import com.example.natan.project3take1.Utils.NetworkUtils;
 import java.net.URL;
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 /**
  * Created by natan on 12/20/2017.
  */
 
 public class FragmentMain extends Fragment implements AsyncListner, SwipeRefreshLayout.OnRefreshListener {
 
-    private RecyclerView mRecyclerView;
+
+    @BindView(R.id.recyclerView)
+    RecyclerView mRecyclerView;
+
+    @BindView(R.id.swip_to_refresh)
+    SwipeRefreshLayout mSwipeRefreshLayout;
+
+
     private RecipeAdapter mRecipeAdapter;
     private URL url;
-    SwipeRefreshLayout mSwipeRefreshLayout;
 
     public static ArrayList<Recepie> recipeList;
 
@@ -51,11 +60,11 @@ public class FragmentMain extends Fragment implements AsyncListner, SwipeRefresh
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+        ButterKnife.bind(this,rootView);
 
-        if(isOnline()) {
+        if (isOnline()) {
 
-            mRecyclerView = rootView.findViewById(R.id.recyclerView);
-            mSwipeRefreshLayout = rootView.findViewById(R.id.swip_to_refresh);
+
             mSwipeRefreshLayout.setOnRefreshListener(this);
             RecyclerView.LayoutManager manager;
             if (MainActivity.isTablet) {
@@ -72,9 +81,7 @@ public class FragmentMain extends Fragment implements AsyncListner, SwipeRefresh
 
             new MyAsyncTask(this).execute(url);
             Log.i("tablu21", String.valueOf(MainActivity.isTablet));
-        }
-        else
-        {
+        } else {
             Toast.makeText(getActivity(), "Check Your Internet Connection !!", Toast.LENGTH_SHORT).show();
         }
 

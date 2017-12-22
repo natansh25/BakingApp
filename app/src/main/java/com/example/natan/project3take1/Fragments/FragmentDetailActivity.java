@@ -129,7 +129,7 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
 
                 setUpView(steps);
             } else {
-                Toast.makeText(getActivity(), "null !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Click on the Steps to play the Video !!", Toast.LENGTH_SHORT).show();
 
 
             }
