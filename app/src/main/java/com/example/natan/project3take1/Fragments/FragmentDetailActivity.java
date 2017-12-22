@@ -94,7 +94,7 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
 
             if (savedInstanceState != null) {
 
-                int index = savedInstanceState.getInt("position");
+                index = savedInstanceState.getInt("position");
                 stepList = savedInstanceState.getParcelableArrayList("stepsi");
                 steps = stepList.get(index);
                 setUpView(steps);
