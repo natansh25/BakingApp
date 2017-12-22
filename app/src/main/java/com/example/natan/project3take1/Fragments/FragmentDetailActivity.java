@@ -1,5 +1,6 @@
 package com.example.natan.project3take1.Fragments;
 
+import android.content.res.Configuration;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
@@ -86,21 +87,38 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
         ButterKnife.bind(this, rootView);
 
 
+
+
+
         if (!MainActivity.isTablet) {
-            //getting extra data into StepList list with the position
-            stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
 
-            index = getActivity().getIntent().getExtras().getInt("position");
-            Log.i("tagu", String.valueOf(index));
+            if (savedInstanceState != null) {
 
-            steps = stepList.get(index);
-            setUpView(steps);
-        }
-        else {
+                int index = savedInstanceState.getInt("position");
+                stepList = savedInstanceState.getParcelableArrayList("stepsi");
+                steps = stepList.get(index);
+                setUpView(steps);
 
 
-            Bundle bundle=this.getArguments();
-            if(bundle!=null) {
+            } else
+
+            {
+                //getting extra data into StepList list with the position
+                stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
+
+
+                index = getActivity().getIntent().getExtras().getInt("position");
+                Log.i("tagu", String.valueOf(index));
+
+                steps = stepList.get(index);
+                setUpView(steps);
+            }
+
+        } else {
+
+
+            Bundle bundle = this.getArguments();
+            if (bundle != null) {
 
                 stepList = getArguments().getParcelableArrayList("bundle");
                 index = getArguments().getInt("index");
@@ -117,7 +135,29 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
             }
         }
 
+        if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE && !MainActivity.isTablet) {
+            fullScreenVideo();
+            playerView.getLayoutParams().height = ViewGroup.LayoutParams.MATCH_PARENT;
+            txt_recipe_desc.setVisibility(View.GONE);
+            txt_recipe_short.setVisibility(View.GONE);
+            btn_next.setVisibility(View.GONE);
+            btn_prev.setVisibility(View.GONE);
+        }
         return rootView;
+
+    }
+
+
+
+    private void fullScreenVideo() {
+        getActivity().getWindow().getDecorView().setSystemUiVisibility(
+                View.SYSTEM_UI_FLAG_LAYOUT_STABLE |
+                        View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_HIDE_NAVIGATION |
+                        View.SYSTEM_UI_FLAG_FULLSCREEN |
+                        View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
 
     }
 
@@ -339,6 +379,13 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
     @Override
     public void onPositionDiscontinuity() {
 
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelableArrayList("stepsi", stepList);
+        outState.putInt("position", index);
     }
 
 
