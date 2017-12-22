@@ -3,6 +3,9 @@ package com.example.natan.project3take1.Pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by natan on 12/17/2017.
  */
@@ -12,6 +15,17 @@ public class Ingredients implements Parcelable {
     private String quantity;
     private String measure;
     private String ingredient;
+
+    public Ingredients(JSONObject ingredientsObj){
+        try {
+            this.quantity=ingredientsObj.getString("quantity");
+            this.measure=ingredientsObj.getString("measure");
+            this.ingredient=ingredientsObj.getString("ingredient");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Ingredients(String quantity, String measure, String ingredient) {
         this.quantity = quantity;

@@ -27,9 +27,13 @@ dependencies {
     //Exoplayer
     compile 'com.google.android.exoplayer:exoplayer:r2.2.0'
     //Picasso
+    //Gson
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile 'com.jakewharton.timber:timber:4.5.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    androidTestCompile('com.android.support.test.espresso:espresso-contrib:2.2')
     androidTestImplementation 'com.android.support.test:runner:1.0.1'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     implementation 'com.android.support:recyclerview-v7:26.1.0'

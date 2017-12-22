@@ -3,6 +3,9 @@ package com.example.natan.project3take1.Pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 /**
  * Created by natan on 12/17/2017.
  */
@@ -14,6 +17,19 @@ public class Steps implements Parcelable {
     private String description;
     private String videoURL;
     private String thumbnailURL;
+
+    public Steps(JSONObject stepObj) {
+        try {
+            this.id = stepObj.getString("id");
+            this.shortDescription = stepObj.getString("shortDescription");
+            this.description = stepObj.getString("description");
+            this.videoURL = stepObj.getString("videoURL");
+            this.thumbnailURL = stepObj.getString("thumbnailURL");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public String getId() {
         return id;

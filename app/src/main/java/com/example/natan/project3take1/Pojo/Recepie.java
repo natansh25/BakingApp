@@ -3,6 +3,10 @@ package com.example.natan.project3take1.Pojo;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 
 /**
@@ -78,6 +82,7 @@ public class Recepie implements Parcelable {
     public void setImage(String image) {
         this.image = image;
     }
+
 
     @Override
     public int describeContents() {
