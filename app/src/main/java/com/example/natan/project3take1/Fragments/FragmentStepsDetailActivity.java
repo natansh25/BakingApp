@@ -101,15 +101,15 @@ public class FragmentStepsDetailActivity extends Fragment implements StepsAdapte
             startActivity(intent);
         } else {
 
-            Bundle bundle=new Bundle();
-            bundle.putInt("index",clickedItemIndex);
-            bundle.putParcelableArrayList("bundle",stepslist);
-            FragmentDetailActivity fragmentDetailActivityb=new FragmentDetailActivity();
-            fragmentDetailActivityb.setArguments(bundle);
+            Bundle bundle = new Bundle();
+            bundle.putInt("index", clickedItemIndex);
+            bundle.putParcelableArrayList("bundle", stepslist);
+
 
             FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
             FragmentDetailActivity fragmentDetailActivity = new FragmentDetailActivity();
             fragmentDetailActivity.index = clickedItemIndex;
+            fragmentDetailActivity.setArguments(bundle);
             fragmentManager.beginTransaction()
                     .replace(R.id.steps_details_frame, fragmentDetailActivity)
                     .commit();

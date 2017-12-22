@@ -102,7 +102,7 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
             Bundle bundle=this.getArguments();
             if(bundle!=null) {
 
-                stepList = getActivity().getIntent().getParcelableArrayListExtra("stepsi");
+                stepList = getArguments().getParcelableArrayList("bundle");
                 index = getArguments().getInt("index");
                 Log.i("fragu21", String.valueOf(index));
                 Steps steps = stepList.get(index);
