@@ -21,8 +21,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="xyz"
+            android:fontFamily="serif-monospace"
+
             android:textColor="#334"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
         <LinearLayout
@@ -34,8 +36,9 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Quantity"
-                android:textSize="18sp" />
+                android:text="Quantity : "
+                android:fontFamily="serif"
+                android:textSize="15sp" />
 
             <TextView
                 android:id="@+id/quantity"
@@ -43,6 +46,7 @@
                 android:layout_height="wrap_content"
                 android:text="50"
                 android:textSize="18sp"
+                android:fontFamily="serif"
                 android:textStyle="bold" />
 
             <TextView
@@ -51,6 +55,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
+                android:fontFamily="serif"
                 android:text="g"
                 android:textSize="18sp"
                 android:textStyle="bold" />

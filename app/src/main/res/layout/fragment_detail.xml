@@ -64,6 +64,7 @@
                     android:layout_height="116dp"
                     android:fontFamily="serif-monospace"
                     android:padding="10dp"
+                    android:textStyle="bold"
                     android:textColor="@android:color/black"
                     android:textSize="14sp"
                     tools:text="Steps_description" />

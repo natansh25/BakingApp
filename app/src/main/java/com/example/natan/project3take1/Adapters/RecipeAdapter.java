@@ -60,27 +60,25 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         Recepie recepie = mRecepies.get(position);
         Context context = holder.img.getContext();
 
-        if (recepie.getImage() == null)
+        if (recepie.getImage().isEmpty())
 
         {
-            Picasso.with(context)
-                    .load(recepie.getImage())
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_foreground)
-                    .into(holder.img);
+            holder.img.setImageResource(R.drawable.front);
+
         } else {
             Picasso.with(context)
-                    .load(R.drawable.ic_launcher_background)
-                    .placeholder(R.drawable.ic_launcher_background)
-                    .error(R.drawable.ic_launcher_foreground)
+                    .load(recepie.getImage())
+                    .placeholder(R.drawable.front)
+                    .error(R.drawable.front)
                     .into(holder.img);
+
         }
 
 
         holder.img.setImageResource(R.drawable.ic_launcher_background);
 
         holder.txt_name.setText(recepie.getName());
-        holder.txt_serving.setText(recepie.getServings());
+        holder.txt_serving.setText("Servings : " + recepie.getServings());
         Log.i("serving21", String.valueOf(recepie.getServings()));
         holder.bind(mRecepies.get(position), mListItemClickListener);
 
@@ -101,7 +99,6 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         TextView txt_name;
         @BindView(R.id.txt_serving)
         TextView txt_serving;
-
 
 
         public MyViewHolder(View itemView) {
