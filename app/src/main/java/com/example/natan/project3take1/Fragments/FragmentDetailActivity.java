@@ -5,6 +5,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
@@ -69,6 +70,8 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
     ImageView img_recipe;
     @BindView(R.id.recipe_step_video)
     SimpleExoPlayerView playerView;
+    @BindView(R.id.detailLayout)
+    ConstraintLayout con;
     private static MediaSessionCompat mediaSession;
     private SimpleExoPlayer exoPlayer;
     private PlaybackStateCompat.Builder stateBuilder;
@@ -129,7 +132,9 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
 
                 setUpView(steps);
             } else {
-                Toast.makeText(getActivity(), "Click on the Steps to play the Video !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Click on the Steps to play the Video !!", Toast.LENGTH_LONG).show();
+                con.setVisibility(View.INVISIBLE);
+
 
 
             }
