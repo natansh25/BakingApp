@@ -153,6 +153,7 @@ public class FragmentDetailActivity extends Fragment implements ExoPlayer.EventL
                         setViewVisibility(playerView, true);
                         initializeMediaSession();
                         initializePlayer(Uri.parse(videoUrl));
+                        exoPlayer.getPlaybackState();
                         exoPlayer.seekTo(currentPosition);
                         txt_recipe_short.setPaintFlags(txt_recipe_short.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
 

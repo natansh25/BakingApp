@@ -63,19 +63,19 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.MyViewHold
         if (recepie.getImage().isEmpty())
 
         {
-            holder.img.setImageResource(R.drawable.front);
+            holder.img.setImageResource(R.drawable.recipe_icon);
 
         } else {
             Picasso.with(context)
                     .load(recepie.getImage())
-                    .placeholder(R.drawable.front)
-                    .error(R.drawable.front)
+                    .placeholder(R.drawable.recipe_icon)
+                    .error(R.drawable.recipe_icon)
                     .into(holder.img);
 
         }
 
 
-        holder.img.setImageResource(R.drawable.ic_launcher_background);
+
 
         holder.txt_name.setText(recepie.getName());
         holder.txt_serving.setText("Servings : " + recepie.getServings());
