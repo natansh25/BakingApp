@@ -35,3 +35,10 @@ In this project you will:
 ### Homescreen Widget
 - [x] Application has a companion homescreen widget.
 - [x] Widget displays ingredient list for desired recipe.
+
+#
+
+
+[Google Certified Associate Android Developer Digital Badge](https://www.credential.net/txa6s9vc)
+
+[Udacity Android Developer Nanodegree Certificate](https://confirm.udacity.com/JDMTWDA5)
